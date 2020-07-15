@@ -69,7 +69,7 @@ namespace byteFileIO {
 
     void readIntsFromFile(std::ifstream &ifs, int32_t ints[], int length) {
         char chars[length*sizeof(int32_t)];
-        readCharsFromFile(ifs, chars, length);
+        readCharsFromFile(ifs, chars, length*sizeof(int32_t));
         for(int i = 0; i < length; i ++) {
             for(uint8_t j = 0; j < sizeof(int32_t); j ++) {
                 ints[i] |= (uint8_t)chars[i*sizeof(int32_t)+j] << (j*8);
