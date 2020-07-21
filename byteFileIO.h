@@ -19,6 +19,7 @@ namespace byteFileIO {
     
     void openStream(std::ifstream &ifs, const char *name) {
         ifs.open(name, std::ios::binary);
+        ifs >> std::noskipws;
     }
 
     void openStream(std::ofstream &ofs, const char *name) {
@@ -36,6 +37,7 @@ namespace byteFileIO {
     void writeCharsToFile(std::ofstream &ofs, char chars[], int length) {
         for(int i = 0; i < length; i++) {
             ofs << chars[i];
+            //std::cout << "charout: " << (int)chars[i] << std::endl;
         }
     }
 
@@ -60,10 +62,10 @@ namespace byteFileIO {
     }
 
     void readCharsFromFile(std::ifstream &ifs, char chars[], int length) {
-        unsigned char uchars[length];
-        ifs >> uchars;
         for(int i = 0; i < length; i ++) {
-            chars[i] = (char)uchars[i];
+            chars[i] = (int8_t)0x00;
+            ifs >> chars[i];
+            //std::cout << "charin: " << (int)chars[i] << std::endl;
         }
     }
 
@@ -71,6 +73,7 @@ namespace byteFileIO {
         char chars[length*sizeof(int32_t)];
         readCharsFromFile(ifs, chars, length*sizeof(int32_t));
         for(int i = 0; i < length; i ++) {
+            ints[i] = 0x00;
             for(uint8_t j = 0; j < sizeof(int32_t); j ++) {
                 ints[i] |= (uint8_t)chars[i*sizeof(int32_t)+j] << (j*8);
             }
