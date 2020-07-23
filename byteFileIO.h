@@ -12,8 +12,7 @@ namespace byteFileIO {
         }
 
         char getByte(float i, uint8_t byte) {
-            std::cerr << "this function is still empty, fill it" << std::endl;
-            std::exit(1);
+            return ((char*)&i)[byte];
         }
     }
     
@@ -55,7 +54,7 @@ namespace byteFileIO {
         char chars[length*sizeof(float)];
         for(int i = 0; i < length; i++) {
             for(int j = 0; j < sizeof(float); j++) {
-                chars[i+j] = getByte(floats[i], j);
+                chars[i*4+j] = getByte(floats[i], j);
             }
         }
         writeCharsToFile(ofs, chars, length*sizeof(float));
@@ -81,7 +80,11 @@ namespace byteFileIO {
     }
 
     void readFloatsFromFile(std::ifstream &ifs, float floats[], int length) {
-
+        char chars[length*sizeof(float)];
+        readCharsFromFile(ifs, chars, length*sizeof(float));
+        for(int i = 0; i < length; i ++) {
+            floats[i] = *((float *)&chars[i*4]);
+        }
     }
 }
 
