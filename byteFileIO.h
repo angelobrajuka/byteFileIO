@@ -5,7 +5,7 @@
 #ifndef BYTE_FILE_IO_H
 #define BYTE_FILE_IO_H
 
-namespace byteFileIO {
+namespace io {
     namespace {
         std::ofstream ofs;
         std::ifstream ifs;

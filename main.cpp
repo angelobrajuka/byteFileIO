@@ -1,6 +1,6 @@
 #include "byteFileIO.h"
 
-using namespace byteFileIO;
+using namespace io;
 
 int main() {
     openofs("file.sav");
